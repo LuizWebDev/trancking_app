@@ -10,8 +10,11 @@ body {
   background-color: black;
   height: 1200px;
 }
+#login{
+  margin-top: 5.5rem;
+}
 
-.header {
+/* .header {
   width: 100%;
   display: flex;
   justify-content: center;
@@ -20,16 +23,17 @@ body {
   padding: 10px;
   font-size: 50px;
   color: white;
-}
+} */
 
 fieldset {
-    width: 40%;
+    width: 30rem;
+    min-width: 10rem;
     margin: auto;
-    padding: 30px;
-    border: solid white 5px;
+    padding: 2rem 3rem 2rem 3rem;
+    border: solid #f3722c 5px;
     border-radius: 10px;
     min-width: 200px;
-    background-color: #f94144;
+    background-color: black;
     color: white;  
 }
   
@@ -37,7 +41,7 @@ legend {
     
   padding: 10px;
   font-size: 30px;
-  color: white;
+  color: #f3722c;
 
 }
 
@@ -99,6 +103,7 @@ input[type="text"] {
   font-weight: bold;
   background-color: black;
   position: fixed;
+  z-index: 999;
   
 }
 
@@ -139,6 +144,7 @@ padding: 20px;
   padding-top: 30px;
   display: flex;
   justify-content: space-around;
+  margin-bottom: 4rem;
   
  
  }
