@@ -14,16 +14,6 @@ body {
   margin-top: 5.5rem;
 }
 
-/* .header {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  margin-bottom: 10px;
-  margin-top: 5px;
-  padding: 10px;
-  font-size: 50px;
-  color: white;
-} */
 
 fieldset {
     width: 30rem;
@@ -119,17 +109,6 @@ input[type="text"] {
 padding: 20px;
 
 }
-/* 
-.radio-class{
-
-  display: flex;
-  justify-content: space-around;
-  flex-wrap: wrap;
-  padding: 10px;
-  border: 2px solid black;
-  border-radius: 5px;
-
-} */
 
 #hab_name{
   margin-bottom: 5px;
@@ -215,7 +194,7 @@ font-size: 28px;
    padding-bottom: 0.5rem;
  }
 
- input[type="number"] {
+input[type="number"] {
 width: 30%;
 border: 2px solid black;
 border-radius: 5px;
@@ -240,7 +219,7 @@ box-sizing: border-box;
 
  }
 
- .colour{
+.colour{
 display: flex;
 justify-content: space-around;
 
