@@ -1,7 +1,7 @@
 let port = 3000
 let username = localStorage.getItem('username')
 
-fetch(`http://localhost:${port}/users/${username}`) //change 
+fetch(`http://localhost:${port}/users/${username}`) 
 .then(resp => resp.json())
 .then(resp => setuserid(resp))
 
@@ -60,13 +60,14 @@ function showTracking(habits) {
 
     const ahabit = document.createElement('div')
     ahabit.setAttribute('class', 'habitContainer');
-
+    ahabit.style.borderColor = habit.color
 
     const hab_div = document.createElement('div')
     hab_div.setAttribute('class', 'hab_section');
     
     const habitName = document.createElement('h3')
     habitName.setAttribute('class', 'hab_title');
+    habitName.style.color = habit.color
     habitName.textContent = habit.name
     const habitDesc = document.createElement('p')
     habitDesc.setAttribute('class', 'habit_Desc');
@@ -74,7 +75,8 @@ function showTracking(habits) {
     const habitFrequency = document.createElement('p')
     habitFrequency.setAttribute('class', 'hab_Descript');
     habitFrequency.textContent = `${habit.frequency} times per ${habit.day_month}`
-    
+
+      
     const updateButton = document.createElement('input')
     updateButton.setAttribute('class', 'btn_update');
     updateButton.setAttribute('type', 'submit')
@@ -83,11 +85,15 @@ function showTracking(habits) {
         habitUpdate(habit.habit_id)
     }) 
     
-    //add a lil something that shows how many times today already
+    
+    //DAILYCOUNT
     const currentCount = document.createElement('p')
     currentCount.setAttribute('class', 'hab_count');
     currentCount.setAttribute('class', 'currentCount')
-    currentCount.textContent = `${habit.count} times today` //habit.day_month.count?? where day_month === current
+   
+    /* let todayCount = localStorage.getItem(`${habit.habit_id}Count`)
+    console.log(todayCount)
+    currentCount.textContent = `${todayCount} times today` */ 
 
     const showChartButton = document.createElement('input')
     showChartButton.setAttribute('class', 'btn_chart');
@@ -100,7 +106,8 @@ function showTracking(habits) {
     const chart = document.createElement('canvas')
     chart.id = `tracking${habit.habit_id}`;
     chart.style.width = "100%";
-
+    chart.style.display = 'none'
+    
 
     ahabit.appendChild(habitName)
     ahabit.appendChild(habitDesc)
@@ -162,17 +169,19 @@ function openChartModal(habit_id, habit_colour) {
             text: "Progress over the last week"}
         }}); 
     }
+    const chart = document.getElementById(`tracking${habit_id}`)
+    chart.style.display = 'block'
+    chart.style.cursor = 'pointer'
+
+    chart.addEventListener('click', () => {
+        chart.style.display = 'none'
+    })
 }
 
-    //modal.appendchild chart
-    //create closebutton
-    //modal appendchild(closebutton)
- 
 
 
-function closeChartModal() {
-    openChartModal.display = none
-}
+
+
 
 
 function habitUpdate(habit_id){
@@ -183,7 +192,7 @@ function habitUpdate(habit_id){
       body: JSON.stringify({habit_id: habit_id}),
       headers: { 'Content-Type': 'application/json' },
     })
-    /* location.reload(); */
+    location.reload();
     console.log('++')
 };
 

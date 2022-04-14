@@ -1,126 +1,24 @@
-/* if frequency = yes/no
-    load a tick box that submits a date to backend
-    updateButton.setAttribute('class', 'updateYesNo')
-    should we add limit to number of times this can be pressed?
-    
-    else
-    load some level of quantity to send to backend
-    const formQuantity = document.createElement('form')
-    const enterQuantity = document.createElement('input')
-    enterQuantity.setAttribute('class', 'updateQuantity')
-    enterQuantity.setAttribute('name', 'frequency')
-    enterQuantity.setAttribute('type', 'text')
-    formQuanity.appendChild(enterQuantity)
-    formQuanity.appendChild(updateButton)
-
-    */
-    async function requestLogin(e){
-        e.preventDefault();
-        try {
-            const options = {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(Object.fromEntries(new FormData(e.target)))
-            }
-            const r = await fetch(`http://localhost:3000/auth/login`, options)
-            const data = await r.json()
-            if (data.err){ throw Error(data.err); }
-            login(data);
-        } catch (err) {
-            console.warn(`Error: ${err}`);
-        }
-    }
-    
-    function login(data){
-        localStorage.setItem('username', data.user);
-        location.hash = '#feed';
-    }
-    
-    function logout(){
-        localStorage.clear();
-        location.hash = '#login';
-    }
-    
-    function currentUser(){
-        const username = localStorage.getItem('username')
-        return username;
-    }
-    ```
-    * The function `login()` is triggered with the `requestLogin()` function and stores the string on `data.user` on the browser with the key of `username`
-    * Instead of **username** we’d like to store the **token**
-    
-    
-    
-    
-    ### Viewing the current database
-    
-    1. Check if containers are running `docker ps` 
-    If not run `docker compose up`
-    
-    2. We can enter the database with: 
-    `docker exec -it <db-container-name> sql -U <user-name> <db-name>`
-    * The container, user and database name should all be available in the **.yaml** file 
-    
-    3. See data stored with: 
-    `SELECT * FROM users;`
-    It’ll show all our users in the database with their passwords easily visible. 
-    
-    #### What information do we need
-    It’s then important to think about who should be able to access certain information on the database and if information is to be displayed do they need to see all of it?
-    
-    User data example:
-    ```
-    {
-        "username": "emile",
-        "email": "emile@email.com",
-        "passwordDigest": "hummushummushummus"
-    }
-    ```
-    
-    
-    ### Continued… Adding Authorisation to a project
-    
-    #### Package helpers
-    * `bcrypt` - [bcrypt - npm](https://www.npmjs.com/package/bcrypt)
-    Will help us to generate a **salt**, choosing a **hashing algorithm** 
-    
-    * We can install directly in the container
-    1. exit the database - `exit`
-    2. enter the server container:
-    `docker exec -it <server-container-name> bash`
-    3. check location: `ls` need to have `package.json` in current directory. 
-    4. `npm i bcrypt`
-    
-    When a user registers we’re going to need to generate a unique version of the password and also compare the plain text password to the encrypted version in the database. 
 
 
-
-
-
-
-
-
-
- /*   //require auth currentuser()
-//HOW TO Define USERID and redirect to there
-
-
-//modal open and close
-/* const newHabitButton = document.getElementById('newHabitButton')
-newHabitButton.addEventListener('click', openModal)
-
-const newHabitModal = document.getElementById('newHabitModal')
-
-const closeBtn = document.getElementById('closeBtn')
-closeBtn.addEventListener('click', closeModal);
-
-function openModal() {
-    newHabitModal.style.display = 'block';
+async function getTodayCount(habit_id) {
+    await fetch(`http://localhost:${port}/habits/getcount/${habit_id}`) //change endpoint
+    .then(resp => resp.json())
+    .then(resp => function() {
+        today = resp.reduce((a, b) => a.date_trunc > b.date_trunc ? a : b)
+        count = today.count
+        return count
+    })
+    
 }
 
-function closeModal() {
-    newHabitModal.display = 'none';
-}
- */
 
-    
+
+function getTodayCount(habit_id) {
+    fetch(`http://localhost:${port}/habits/getcount/${habit_id}`) //change endpoint
+    .then(resp => resp.json())
+    .then(resp => function() {
+        today = resp.reduce((a, b) => a.date_trunc > b.date_trunc ? a : b)
+        count = today.count
+        localStorage.setItem(`${habit_id}Count`, count);
+    })
+}

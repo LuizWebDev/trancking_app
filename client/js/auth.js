@@ -30,10 +30,6 @@ function login(data){
     console.log('YOURE IN')
 }
 
-/* function logout(){
-    localStorage.clear();
-    location.hash = '#login/';
-} */
 
 
 function currentUser(){
